@@ -1,0 +1,21 @@
+{
+  "name": "pro-bongo",
+  "version": "1.0.0",
+  "description": "PRO Bongo",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder --win"
+  },
+  "devDependencies": {
+    "electron": "^37.0.0",
+    "electron-builder": "^26.0.0"
+  },
+  "build": {
+    "appId": "com.pro.bongo",
+    "productName": "PRO Bongo",
+    "win": {
+      "target": "nsis"
+    }
+  }
+}
