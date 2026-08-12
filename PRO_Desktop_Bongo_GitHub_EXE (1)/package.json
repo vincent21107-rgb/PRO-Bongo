@@ -1,0 +1,36 @@
+{
+  "name": "pro-desktop-bongo",
+  "version": "1.0.0",
+  "description": "Transparent desktop mascot that reacts to global keyboard and mouse input.",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "build:win": "electron-builder --win --x64"
+  },
+  "devDependencies": {
+    "electron": "^37.0.0"
+  },
+  "dependencies": {
+    "uiohook-napi": "^1.5.4"
+  },
+  "build": {
+    "appId": "com.pro.desktopbongo",
+    "productName": "PRO Desktop Bongo",
+    "asar": true,
+    "files": [
+      "**/*",
+      "!dist/**/*"
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "artifactName": "PRO-Desktop-Bongo-${version}-Setup.${ext}"
+    }
+  }
+}

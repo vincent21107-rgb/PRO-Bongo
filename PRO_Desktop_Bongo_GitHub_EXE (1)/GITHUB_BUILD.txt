@@ -1,0 +1,14 @@
+不用在自己的 Windows 電腦安裝 Node.js。
+
+1. 到 GitHub 建立一個新的 Repository。
+2. 把這個專案資料夾裡的所有檔案上傳到 Repository 根目錄。
+   注意：`.github/workflows/build-windows.yml` 也要一起上傳。
+3. 上傳完成後，GitHub 會自動執行 Actions。
+4. 到 Repository → Actions → Build Windows EXE。
+5. 等待工作完成（綠色勾）。
+6. 點進該次執行，往下找到 Artifacts。
+7. 下載 `PRO-Desktop-Bongo-Windows`。
+8. 解壓縮後就是 Windows `.exe` 安裝檔。
+
+如果 Actions 沒有自動跑：
+Repository → Actions → Build Windows EXE → Run workflow。

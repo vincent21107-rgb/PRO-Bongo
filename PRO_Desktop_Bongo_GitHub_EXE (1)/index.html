@@ -1,0 +1,125 @@
+
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PRO Desktop Bongo</title>
+<style>
+  html, body {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: transparent;
+    user-select: none;
+  }
+
+  #stage {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    background: transparent;
+  }
+
+  #character {
+    width: 92%;
+    max-height: 96%;
+    object-fit: contain;
+    transform-origin: bottom center;
+    transition: transform 70ms ease-out;
+    -webkit-user-drag: none;
+    pointer-events: none;
+  }
+
+  .tap {
+    animation: tap 95ms ease-out;
+  }
+
+  .mouse {
+    animation: mouse 120ms ease-out;
+  }
+
+  .idle {
+    animation: idle 1.8s ease-in-out infinite;
+  }
+
+  @keyframes tap {
+    0% { transform: translateY(0) scale(1); }
+    45% { transform: translateY(7px) scale(0.985); }
+    100% { transform: translateY(0) scale(1); }
+  }
+
+  @keyframes mouse {
+    0% { transform: translateY(0) rotate(0deg); }
+    45% { transform: translateY(4px) rotate(-0.6deg); }
+    100% { transform: translateY(0) rotate(0deg); }
+  }
+
+  @keyframes idle {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-2px); }
+  }
+
+  #hint {
+    position: fixed;
+    left: 50%;
+    bottom: 7px;
+    transform: translateX(-50%);
+    padding: 5px 9px;
+    border-radius: 8px;
+    background: rgba(0,0,0,.62);
+    color: white;
+    font: 12px system-ui, sans-serif;
+    opacity: 0;
+    transition: opacity .2s;
+    pointer-events: none;
+  }
+
+  #hint.show { opacity: 1; }
+</style>
+</head>
+<body>
+<div id="stage">
+  <img id="character" src="assets/pro-character.png" draggable="false" alt="PRO character">
+</div>
+<div id="hint"></div>
+
+<script>
+const img = document.getElementById("character");
+const hint = document.getElementById("hint");
+
+let timer = null;
+
+function flash(className) {
+  clearTimeout(timer);
+  img.classList.remove("idle", "tap", "mouse");
+  void img.offsetWidth;
+  img.classList.add(className);
+  timer = setTimeout(() => {
+    img.classList.remove(className);
+    img.classList.add("idle");
+  }, className === "mouse" ? 130 : 105);
+}
+
+function showHint(text) {
+  hint.textContent = text;
+  hint.classList.add("show");
+  clearTimeout(showHint.t);
+  showHint.t = setTimeout(() => hint.classList.remove("show"), 1300);
+}
+
+window.desktopEvents.onKeyDown(() => flash("tap"));
+window.desktopEvents.onMouseDown((e) => {
+  if (e.button === 1) flash("mouse");
+  else if (e.button === 2) flash("mouse");
+});
+window.desktopEvents.onClickThrough((e) => {
+  showHint(e.enabled ? "穿透模式：開啟（F8切換）" : "穿透模式：關閉（F8切換）");
+});
+img.classList.add("idle");
+</script>
+</body>
+</html>
